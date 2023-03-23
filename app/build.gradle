@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.androidexam.musicplayer'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.androidexam.musicplayer"
@@ -26,6 +26,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
