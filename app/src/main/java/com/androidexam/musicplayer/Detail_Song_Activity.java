@@ -2,6 +2,8 @@ package com.androidexam.musicplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 public class Detail_Song_Activity extends AppCompatActivity {
