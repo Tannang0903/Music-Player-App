@@ -1,5 +1,6 @@
 package com.androidexam.musicplayer;
 
+import static com.androidexam.musicplayer.AlbumDetailsAdapter.albumFiles;
 import static com.androidexam.musicplayer.MainActivity.repeatBoolean;
 import static com.androidexam.musicplayer.MainActivity.shuffleBoolean;
 import static com.androidexam.musicplayer.MainActivity.song;
@@ -343,7 +344,12 @@ public class DetailSongActivity extends AppCompatActivity implements MediaPlayer
 
     private void getIntenMethod() {
         position = getIntent().getIntExtra("position", -1);
-        listSongs = song;
+        String sender = getIntent().getStringExtra("sender");
+        if(sender != null && sender.equals("albumDetails")) {
+            listSongs = albumFiles;
+        }else {
+            listSongs = song;
+        }
         if(listSongs != null){
             playPause.setImageResource(R.drawable.ic_baseline_pause_24);
             uri = Uri.parse(listSongs.get(position).getPath());
