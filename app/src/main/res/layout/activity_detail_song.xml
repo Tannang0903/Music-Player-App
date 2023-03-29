@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/main_bg"
     android:orientation="vertical"
+    android:id="@+id/mContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Detail_Song_Activity">
+    tools:context=".DetailSongActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -51,12 +52,18 @@
         android:id="@+id/card"
         android:layout_below="@+id/layout_top_btn">
 
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:id="@+id/cover_art"
             android:src="@drawable/messi" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/imageViewGredient"
+            android:layout_alignParentBottom="true">
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -67,6 +74,7 @@
         android:layout_below="@+id/card">
 
         <TextView
+            android:id="@+id/song_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -110,56 +118,48 @@
         android:gravity="left"
         android:layout_below="@+id/my_song"
         android:text="This is Artist"
+        android:id="@+id/artist"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <SeekBar
-        android:id="@+id/seebar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/my_song"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:thumb="@drawable/seebar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="60dp"
+       android:layout_above="@+id/layout_for_bottom"
+       android:id="@+id/seek_bar_layout">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="1:28"
+           android:textColor="@color/white"
+           android:id="@+id/durantionPlayed"
+           android:layout_marginStart="10dp"
+           android:layout_alignParentStart="true"/>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/seebar">
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="4:28"
+           android:textColor="@color/white"
+           android:id="@+id/durantionTotal"
+           android:layout_marginStart="10dp"
+           android:layout_alignParentEnd="true"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="0:00"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:background="@android:color/transparent"
-            android:layout_marginLeft="20dp"
-            android:gravity="left"/>
+       <SeekBar
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/seekBar"
+           android:layout_marginStart="20dp"
+           android:layout_marginEnd="20dp"
+           android:layout_alignParentBottom="true"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="4:00"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="20dp"
-            android:gravity="right"/>
-    </RelativeLayout>
+   </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:id="@+id/layout_for_bottom"
         android:layout_marginBottom="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
@@ -175,6 +175,7 @@
 
         <ImageView
             android:layout_width="35dp"
+            android:id="@+id/prev_btn"
             android:layout_height="35dp"
             android:src="@drawable/ic_baseline_skip_previous_24"
             android:layout_toStartOf="@+id/play_pause"
@@ -195,6 +196,7 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:id="@+id/next_btn"
             android:src="@drawable/ic_baseline_skip_next_24"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/play_pause"
