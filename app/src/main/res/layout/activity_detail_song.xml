@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/main_bg"
     android:orientation="vertical"
+    android:id="@+id/mContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailSongActivity">
@@ -51,13 +52,18 @@
         android:id="@+id/card"
         android:layout_below="@+id/layout_top_btn">
 
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:id="@+id/cover_art"
             android:src="@drawable/messi" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/imageViewGredient"
+            android:layout_alignParentBottom="true">
+        </ImageView>
     </RelativeLayout>
 
     <RelativeLayout

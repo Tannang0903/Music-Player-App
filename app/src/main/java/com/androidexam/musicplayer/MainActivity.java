@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 1;
     static ArrayList<Song> song;
+    static SongAdapter songAdapter;
+    static boolean shuffleBoolean = false, repeatBoolean= false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.app_main);
         permission();
         initViewPager();
+
+//        song.add(new Song("R.drawable.song", "Song 1", "Artist 1", "Albums 1", "duration", "1"));
+//        song.add(new Song("R.drawable.song", "Song 2", "Artist 1", "Albums 1", "duration", "1"));
+//        song.add(new Song("R.drawable.song", "Song 3", "Artist 1", "Albums 1", "duration", "1"));
+//        songAdapter.notifyDataSetChanged();
     }
 
     public void permission() {
@@ -110,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 MediaStore.Audio.Media.DURATION,
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media._ID,
         };
 
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
@@ -120,12 +128,12 @@ public class MainActivity extends AppCompatActivity {
                 String duration = cursor.getString(2);
                 String path = cursor.getString(3);
                 String artist = cursor.getString(4);
+                String id = cursor.getString(5);
 
-                Song song = new Song(album, title, duration, path, artist);
+                Song song = new Song(album, title, duration, path, artist, id);
                 tempSongList.add(song);
             }
         }
         return tempSongList;
     }
-
 }
