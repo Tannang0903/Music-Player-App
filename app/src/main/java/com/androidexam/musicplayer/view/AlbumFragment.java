@@ -1,4 +1,4 @@
-package com.androidexam.musicplayer;
+package com.androidexam.musicplayer.view;
 
 import static com.androidexam.musicplayer.MainActivity.albums;
 import static com.androidexam.musicplayer.MainActivity.song;
@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.androidexam.musicplayer.R;
+import com.androidexam.musicplayer.viewmodel.AlbumAdapter;
 
 
 public class AlbumFragment extends Fragment {

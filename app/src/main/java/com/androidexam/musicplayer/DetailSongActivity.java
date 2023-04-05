@@ -1,6 +1,6 @@
 package com.androidexam.musicplayer;
 
-import static com.androidexam.musicplayer.AlbumDetailsAdapter.albumFiles;
+import static com.androidexam.musicplayer.viewmodel.AlbumDetailsAdapter.albumFiles;
 import static com.androidexam.musicplayer.MainActivity.repeatBoolean;
 import static com.androidexam.musicplayer.MainActivity.shuffleBoolean;
 import static com.androidexam.musicplayer.MainActivity.song;
@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.androidexam.musicplayer.model.Song;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

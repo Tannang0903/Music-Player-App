@@ -10,6 +10,8 @@ import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.androidexam.musicplayer.model.Song;
+import com.androidexam.musicplayer.viewmodel.AlbumDetailsAdapter;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;

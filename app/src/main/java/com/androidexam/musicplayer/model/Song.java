@@ -1,11 +1,27 @@
-package com.androidexam.musicplayer;
+package com.androidexam.musicplayer.model;
 
-public class Song {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Song implements Serializable {
+
+    @SerializedName("thumbnail")
     private String path;
+
+    @SerializedName("title")
     private String title;
+
+    @SerializedName("artist")
     private String artist;
+
+    @SerializedName("album")
     private String album;
+
+    @SerializedName("duration")
     private String duration;
+
+    @SerializedName("id")
     private String id;
 
     public Song(String path, String title, String artist, String album, String duration, String id) {
