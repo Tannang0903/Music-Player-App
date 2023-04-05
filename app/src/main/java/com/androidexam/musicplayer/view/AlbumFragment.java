@@ -1,4 +1,4 @@
-package com.androidexam.musicplayer;
+package com.androidexam.musicplayer.view;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.androidexam.musicplayer.R;
 
 
 public class AlbumFragment extends Fragment {

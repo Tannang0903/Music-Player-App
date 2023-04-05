@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.androidexam.musicplayer.model.Song;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

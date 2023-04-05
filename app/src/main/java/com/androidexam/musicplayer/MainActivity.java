@@ -12,12 +12,15 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.browse.MediaBrowser;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.androidexam.musicplayer.model.Song;
+import com.androidexam.musicplayer.view.AlbumFragment;
+import com.androidexam.musicplayer.view.SongsFragment;
+import com.androidexam.musicplayer.viewmodel.SongAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE = 1;
-    static ArrayList<Song> song;
+    public static ArrayList<Song> song;
     static SongAdapter songAdapter;
     static boolean shuffleBoolean = false, repeatBoolean= false;
 
@@ -35,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.app_main);
         permission();
         initViewPager();
-
-//        song.add(new Song("R.drawable.song", "Song 1", "Artist 1", "Albums 1", "duration", "1"));
-//        song.add(new Song("R.drawable.song", "Song 2", "Artist 1", "Albums 1", "duration", "1"));
-//        song.add(new Song("R.drawable.song", "Song 3", "Artist 1", "Albums 1", "duration", "1"));
-//        songAdapter.notifyDataSetChanged();
     }
 
     public void permission() {
@@ -49,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
             song = getAllSong(this);
+            System.out.println("Tất cả bài hát: ");
+            System.out.print(song);
         }
     }
 
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
                 song = getAllSong(this);
+                songAdapter.notifyDataSetChanged();
             } else {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
             }
@@ -134,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
                 tempSongList.add(song);
             }
         }
+//        tempSongList.add(new Song("d", "Song 1", "Artist 1", "albums1", "d", "1"));
+//        tempSongList.add(new Song("d", "Song 1", "Artist 1", "albums1", "d", "2"));
         return tempSongList;
     }
 }

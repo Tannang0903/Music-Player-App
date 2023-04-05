@@ -1,4 +1,4 @@
-package com.androidexam.musicplayer;
+package com.androidexam.musicplayer.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -18,6 +20,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidexam.musicplayer.DetailSongActivity;
+import com.androidexam.musicplayer.R;
+import com.androidexam.musicplayer.model.Song;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,15 +30,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> {
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> implements Filterable {
+    private Context mContext;
+    private ArrayList<Song> mSong;
+    private ArrayList<Song> mSongCopy;
+
 
     public SongAdapter(Context mContext, ArrayList<Song> mSong) {
         this.mContext = mContext;
         this.mSong = mSong;
+        this.mSongCopy = mSong;
     }
-
-    private Context mContext;
-    private ArrayList<Song> mSong;
 
     @NonNull
     @Override
@@ -105,6 +112,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
     @Override
     public int getItemCount() {
         return mSong.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
