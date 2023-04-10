@@ -140,4 +140,9 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.MyViewHolder> 
         return art;
     }
 
+    public void updateList(ArrayList<Song> songs){
+        mSong = new ArrayList<>();
+        mSong.addAll(songs);
+        notifyDataSetChanged();
+    }
 }
