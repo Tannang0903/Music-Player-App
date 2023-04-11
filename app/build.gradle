@@ -57,5 +57,6 @@ dependencies {
 
     implementation 'androidx.palette:palette:1.0.0'
 
+    implementation 'androidx.media:media:1.4.1'
 
 }
