@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class SongsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    SongAdapter songAdapter;
+    public static SongAdapter songAdapter;
     public SongsFragment() {
     }
 
