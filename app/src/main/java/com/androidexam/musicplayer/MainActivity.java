@@ -163,8 +163,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
         }
-//        tempSongList.add(new Song("d", "Song 1", "Artist 1", "albums1", "d", "1"));
-//        tempSongList.add(new Song("d", "Song 1", "Artist 1", "albums1", "d", "2"));
         return tempSongList;
     }
 
