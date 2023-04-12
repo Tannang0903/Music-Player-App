@@ -1,22 +1,11 @@
 package com.androidexam.musicplayer;
 
 //import static com.androidexam.musicplayer.viewmodel.AlbumDetailsAdapter.albumFiles;
-import static com.androidexam.musicplayer.ApplicationClass.ACTION_NEXT;
-import static com.androidexam.musicplayer.ApplicationClass.ACTION_PLAY;
-import static com.androidexam.musicplayer.ApplicationClass.ACTION_PREVIOUS;
-import static com.androidexam.musicplayer.ApplicationClass.CHANNEL_ID_2;
+
 import static com.androidexam.musicplayer.MainActivity.repeatBoolean;
 import static com.androidexam.musicplayer.MainActivity.shuffleBoolean;
 import static com.androidexam.musicplayer.MainActivity.song;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.palette.graphics.Palette;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,13 +15,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -41,13 +30,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.palette.graphics.Palette;
+
 import com.androidexam.musicplayer.model.Song;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class DetailSongActivity extends AppCompatActivity
         implements ActionPlaying, ServiceConnection{
@@ -61,15 +54,14 @@ public class DetailSongActivity extends AppCompatActivity
     private Handler handler = new Handler();
     private Thread playThread, nextThread, prevThread;
     MusicService musicService;
-    MediaSessionCompat mediaSessionCompat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setFullScreen();
+        setFullScreen();
         setContentView(R.layout.activity_detail_song);
         getSupportActionBar().hide();
-        mediaSessionCompat = new MediaSessionCompat(getBaseContext(), "My Audio");
         initViews();
         getIntenMethod();
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -129,6 +121,12 @@ public class DetailSongActivity extends AppCompatActivity
         });
     }
 
+    private void setFullScreen() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
     @Override
     protected void onResume() {
         Intent intent = new Intent(this, MusicService.class);
@@ -170,7 +168,7 @@ public class DetailSongActivity extends AppCompatActivity
     public void playPauseClicked() {
         if(musicService.isPlaying()){
             playPause.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-            showNotification(R.drawable.ic_baseline_play_arrow_24);
+            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             musicService.pause();
             seekBar.setMax(musicService.getDuration() / 1000);
             DetailSongActivity.this.runOnUiThread(new Runnable() {
@@ -186,7 +184,7 @@ public class DetailSongActivity extends AppCompatActivity
             });
         } else {
             playPause.setImageResource(R.drawable.ic_baseline_pause_24);
-            showNotification(R.drawable.ic_baseline_pause_24);
+            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             musicService.start();
             seekBar.setMax(musicService.getDuration() / 1000);
             DetailSongActivity.this.runOnUiThread(new Runnable() {
@@ -246,7 +244,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            showNotification(R.drawable.ic_baseline_pause_24);
+            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_pause_24);
             musicService.start();
         }
@@ -277,7 +275,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            showNotification(R.drawable.ic_baseline_play_arrow_24);
+            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
         }
     }
@@ -325,7 +323,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            showNotification(R.drawable.ic_baseline_pause_24);
+            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_pause_24);
             musicService.start();
         }
@@ -356,7 +354,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            showNotification(R.drawable.ic_baseline_play_arrow_24);
+            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
         }
     }
@@ -387,7 +385,7 @@ public class DetailSongActivity extends AppCompatActivity
             playPause.setImageResource(R.drawable.ic_baseline_pause_24);
             uri = Uri.parse(listSongs.get(position).getPath());
         }
-        showNotification(R.drawable.ic_baseline_pause_24);
+
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra("servicePosition", position);
         startService(intent);
@@ -505,12 +503,14 @@ public class DetailSongActivity extends AppCompatActivity
     public void onServiceConnected(ComponentName name, IBinder service) {
         MusicService.MyBinder myBinder = (MusicService.MyBinder)service;
         musicService = myBinder.getService();
+        musicService.setCallBack(this);
         Toast.makeText(this, "Connected" + musicService, Toast.LENGTH_SHORT).show();
         seekBar.setMax(musicService.getDuration() / 1000);
         metaData(uri);
         songName.setText(listSongs.get(position).getTitle());
         songArtist.setText(listSongs.get(position).getArtist());
         musicService.onCompleted();
+        musicService.showNotification(R.drawable.ic_baseline_pause_24);
     }
 
     @Override
@@ -518,51 +518,7 @@ public class DetailSongActivity extends AppCompatActivity
         musicService = null;
     }
 
-    void showNotification(int playPauseBtn) {
-        Intent intent = new Intent(this, DetailSongActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        Intent prevIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_PREVIOUS);
-        PendingIntent prevPending = PendingIntent.getBroadcast(this, 0, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent pauseIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_PLAY);
-        PendingIntent pausePending = PendingIntent.getBroadcast(this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent nextIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_NEXT);
-        PendingIntent nextPending = PendingIntent.getBroadcast(this, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        byte[] picture = null;
-        picture = getAlbumArt(song.get(position).getPath());
-        Bitmap thump = null;
-        if(picture != null) {
-            thump = BitmapFactory.decodeByteArray(picture, 0, picture.length);
-        }
-        else {
-            thump = BitmapFactory.decodeByteArray(picture, 0, picture.length);
-        }
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_2)
-                .setSmallIcon(playPauseBtn)
-                .setLargeIcon(thump).
-                setContentTitle(song.get(position).getTitle())
-                .setContentText(song.get(position).getArtist())
-                .addAction(R.drawable.ic_baseline_skip_previous_24, "Previous", prevPending)
-                .addAction(playPauseBtn, "Pause", pausePending)
-                .addAction(R.drawable.ic_baseline_skip_next_24, "Next", nextPending)
-                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                        .setMediaSession(mediaSessionCompat.getSessionToken()))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setOnlyAlertOnce(true)
-                .build();
-        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
 
 
-    }
 
-    private byte[] getAlbumArt(String uri) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(uri);
-        byte[] art = retriever.getEmbeddedPicture();
-        return art;
-    }
 }
