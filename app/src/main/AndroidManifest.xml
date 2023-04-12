@@ -4,6 +4,7 @@
     package="com.androidexam.musicplayer">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -46,6 +47,15 @@
         </activity>
 
         <service android:name=".MusicService" android:enabled="true"/>
+
+        <receiver android:name=".NotificationReceiver" android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="actionprevious"/>
+                <action android:name="actionnext"/>
+                <action android:name="actionnext"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
