@@ -1,4 +1,4 @@
-package com.androidexam.musicplayer;
+package com.androidexam.musicplayer.model;
 
 public interface ActionPlaying {
     void playPauseClicked();

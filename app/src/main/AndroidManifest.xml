@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".AlbumDetails"
+            android:name=".DetailAlbumActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -57,5 +57,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

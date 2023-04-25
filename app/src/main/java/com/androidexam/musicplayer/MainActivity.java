@@ -17,6 +17,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         } else {
             Toast.makeText(this, "Permission Granted!", Toast.LENGTH_SHORT).show();
             song = getAllSong(this);
-            System.out.println("Tất cả bài hát: ");
-            System.out.print(song);
         }
     }
 
@@ -81,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
-
 
     public static class ViewPagerAdapter extends FragmentPagerAdapter {
         private ArrayList<Fragment> fragments;
@@ -117,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     }
 
-    public  ArrayList<Song> getAllSong(Context context) {
+    public ArrayList<Song> getAllSong(Context context) {
         SharedPreferences preferences = getSharedPreferences(MY_SORT_PREF, MODE_PRIVATE);
         String sortOrder = preferences.getString("sorting","sortByName");
         ArrayList<String> duplicate = new ArrayList<>();
@@ -143,9 +140,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 MediaStore.Audio.Media.ARTIST,
                 MediaStore.Audio.Media._ID,
         };
-
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, order);
         if (cursor != null) {
+
             while (cursor.moveToNext()) {
                 String album = cursor.getString(0);
                 String title = cursor.getString(1);
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 String artist = cursor.getString(4);
                 String id = cursor.getString(5);
 
-                Song song = new Song(album, title, duration, path, artist, id);
+                Song song = new Song(path, title, artist, album, duration, id);
                 tempSongList.add(song);
 
                 if(!duplicate.contains(album)) {

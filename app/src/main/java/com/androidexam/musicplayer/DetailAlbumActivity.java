@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AlbumDetails extends AppCompatActivity {
+public class DetailAlbumActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ImageView albumPhoto;

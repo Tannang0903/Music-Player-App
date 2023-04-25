@@ -1,11 +1,10 @@
 package com.androidexam.musicplayer;
 
-//import static com.androidexam.musicplayer.viewmodel.AlbumDetailsAdapter.albumFiles;
-
 import static com.androidexam.musicplayer.MainActivity.repeatBoolean;
 import static com.androidexam.musicplayer.MainActivity.shuffleBoolean;
 import static com.androidexam.musicplayer.MainActivity.song;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.palette.graphics.Palette;
 
+import com.androidexam.musicplayer.model.ActionPlaying;
 import com.androidexam.musicplayer.model.Song;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,7 +56,6 @@ public class DetailSongActivity extends AppCompatActivity
     private Thread playThread, nextThread, prevThread;
     MusicService musicService;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +64,7 @@ public class DetailSongActivity extends AppCompatActivity
         getSupportActionBar().hide();
         initViews();
         getIntenMethod();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -106,6 +107,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             }
         });
+
         repeatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +119,15 @@ public class DetailSongActivity extends AppCompatActivity
                     repeatBoolean = true;
                     repeatBtn.setImageResource(R.drawable.ic_baseline_repeat_on_24);
                 }
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailSongActivity.this, MainActivity.class);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
             }
         });
     }
@@ -131,7 +142,6 @@ public class DetailSongActivity extends AppCompatActivity
     protected void onResume() {
         Intent intent = new Intent(this, MusicService.class);
         bindService(intent, this, BIND_AUTO_CREATE);
-
         playThreadBtn();
         nextThreadBtn();
         prevThreadBtn();
@@ -168,7 +178,7 @@ public class DetailSongActivity extends AppCompatActivity
     public void playPauseClicked() {
         if(musicService.isPlaying()){
             playPause.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
+//            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             musicService.pause();
             seekBar.setMax(musicService.getDuration() / 1000);
             DetailSongActivity.this.runOnUiThread(new Runnable() {
@@ -184,7 +194,7 @@ public class DetailSongActivity extends AppCompatActivity
             });
         } else {
             playPause.setImageResource(R.drawable.ic_baseline_pause_24);
-            musicService.showNotification(R.drawable.ic_baseline_pause_24);
+//            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             musicService.start();
             seekBar.setMax(musicService.getDuration() / 1000);
             DetailSongActivity.this.runOnUiThread(new Runnable() {
@@ -214,6 +224,7 @@ public class DetailSongActivity extends AppCompatActivity
                 });
             }
         };
+        nextThread.start();
     }
 
     public void nextBtnClicked() {
@@ -244,7 +255,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            musicService.showNotification(R.drawable.ic_baseline_pause_24);
+//            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_pause_24);
             musicService.start();
         }
@@ -275,7 +286,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
+//            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
         }
     }
@@ -293,6 +304,7 @@ public class DetailSongActivity extends AppCompatActivity
                 });
             }
         };
+        prevThread.start();
     }
 
     public void preBtnClicked() {
@@ -305,7 +317,7 @@ public class DetailSongActivity extends AppCompatActivity
             else if(!shuffleBoolean && !repeatBoolean){
                 position = ((position - 1) < 0 ? (listSongs.size() -1) : (position -1 ));
             }
-            uri = Uri.parse((listSongs.get(position).getTitle()));
+            uri = Uri.parse((listSongs.get(position).getPath()));
             musicService.createMediaPlayer(position);
             metaData(uri);
             songName.setText(listSongs.get(position).getTitle());
@@ -323,7 +335,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            musicService.showNotification(R.drawable.ic_baseline_pause_24);
+//            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_pause_24);
             musicService.start();
         }
@@ -354,7 +366,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
+//            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
         }
     }
@@ -362,8 +374,8 @@ public class DetailSongActivity extends AppCompatActivity
     private String formattedTime(int mCurrentPosition){
         String totalout = "";
         String totalNew = "";
-        String seconds = String.valueOf(mCurrentPosition % 60);
-        String minutes = String.valueOf(mCurrentPosition / 60);
+        String seconds = String.valueOf((mCurrentPosition ) % 60);
+        String minutes = String.valueOf((mCurrentPosition ) / 60);
         totalout = minutes + ":" + seconds;
         totalNew = minutes + ":" + "0" + seconds;
         if(seconds.length() == 1){
@@ -385,7 +397,6 @@ public class DetailSongActivity extends AppCompatActivity
             playPause.setImageResource(R.drawable.ic_baseline_pause_24);
             uri = Uri.parse(listSongs.get(position).getPath());
         }
-
         Intent intent = new Intent(this, MusicService.class);
         intent.putExtra("servicePosition", position);
         startService(intent);
@@ -401,13 +412,16 @@ public class DetailSongActivity extends AppCompatActivity
         coverArt = findViewById(R.id.cover_art);
         prevBtn = findViewById(R.id.prev_btn);
         nextBtn = findViewById(R.id.next_btn);
+        shuffleBtn = findViewById(R.id.shuffed_btn);
+        repeatBtn = findViewById(R.id.repeat_btn);
+        backBtn = findViewById(R.id.back_btn);
     }
 
     private void metaData(Uri uri){
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(uri.toString());
-        int durationTotall = Integer.parseInt(listSongs.get(position).getDuration());
-        durationTotal.setText(formattedTime(durationTotall));
+        int duration_total = Integer.parseInt(listSongs.get(position).getDuration()) / 1000;
+        durationTotal.setText(formattedTime(duration_total));
         byte[] art = retriever.getEmbeddedPicture();
         Bitmap bitmap = null;
         if(art != null){
@@ -510,15 +524,11 @@ public class DetailSongActivity extends AppCompatActivity
         songName.setText(listSongs.get(position).getTitle());
         songArtist.setText(listSongs.get(position).getArtist());
         musicService.onCompleted();
-        musicService.showNotification(R.drawable.ic_baseline_pause_24);
+//        musicService.showNotification(R.drawable.ic_baseline_pause_24);
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
         musicService = null;
     }
-
-
-
-
 }

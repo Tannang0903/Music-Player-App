@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidexam.musicplayer.AlbumDetails;
+import com.androidexam.musicplayer.DetailAlbumActivity;
 import com.androidexam.musicplayer.R;
 import com.androidexam.musicplayer.model.Song;
 import com.bumptech.glide.Glide;
@@ -55,7 +55,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, AlbumDetails.class);
+                Intent intent = new Intent(mContext, DetailAlbumActivity.class);
                 intent.putExtra("albumName",albumFiles.get(position).getAlbum());
                 mContext.startActivity(intent);
             }
@@ -85,5 +85,4 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         retriever.release();
         return art;
     }
-
 }

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.androidexam.musicplayer.model.ActionPlaying;
 import com.androidexam.musicplayer.model.Song;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener {
     IBinder mBinder = new MyBinder();
-    MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer ;
     ArrayList<Song> songs = new ArrayList<>();
     Uri uri;
     int position = -1;
@@ -48,7 +49,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     @Override
     public IBinder onBind(Intent intent) {
         Log.e("Bind", "Method ");
-        return mBinder  ;
+        return mBinder;
     }
 
     public class MyBinder extends Binder {
@@ -160,7 +161,6 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
                 onCompleted();
             }
         }
-
     }
 
     void setCallBack(ActionPlaying actionPlaying) {
@@ -187,12 +187,12 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             thump = BitmapFactory.decodeByteArray(picture, 0, picture.length);
         }
         else {
-            thump = BitmapFactory.decodeByteArray(picture, 0, picture.length);
+            thump = BitmapFactory.decodeResource(getResources(), R.drawable.seebar);
         }
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_2)
                 .setSmallIcon(playPauseBtn)
-                .setLargeIcon(thump).
-                setContentTitle(songs.get(position).getTitle())
+                .setLargeIcon(thump)
+                .setContentTitle(songs.get(position).getTitle())
                 .setContentText(songs.get(position).getArtist())
                 .addAction(R.drawable.ic_baseline_skip_previous_24, "Previous", prevPending)
                 .addAction(playPauseBtn, "Pause", pausePending)
@@ -204,9 +204,8 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
         startForeground(1,notification);
-
-
     }
+
     private byte[] getAlbumArt(String uri) {
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         retriever.setDataSource(uri);

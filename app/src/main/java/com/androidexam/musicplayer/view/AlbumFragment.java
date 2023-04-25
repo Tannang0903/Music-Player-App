@@ -23,7 +23,7 @@ public class AlbumFragment extends Fragment {
     RecyclerView recyclerView;
     AlbumAdapter albumAdapter;
     public AlbumFragment() {
-        // Required empty public constructor
+
     }
 
     @Override

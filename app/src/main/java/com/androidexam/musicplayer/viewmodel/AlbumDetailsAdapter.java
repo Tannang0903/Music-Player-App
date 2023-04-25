@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidexam.musicplayer.AlbumDetails;
+import com.androidexam.musicplayer.DetailAlbumActivity;
 import com.androidexam.musicplayer.DetailSongActivity;
 import com.androidexam.musicplayer.R;
 import com.androidexam.musicplayer.model.Song;
@@ -32,7 +32,7 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
         this.albumFiles = albumFiles;
     }
 
-    public AlbumDetailsAdapter(AlbumDetails mContext, ArrayList<Song> albumSongs) {
+    public AlbumDetailsAdapter(DetailAlbumActivity mContext, ArrayList<Song> albumSongs) {
     }
 
     @NonNull
@@ -90,5 +90,4 @@ public class AlbumDetailsAdapter extends RecyclerView.Adapter<AlbumDetailsAdapte
         retriever.release();
         return art;
     }
-
 }

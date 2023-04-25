@@ -6,22 +6,22 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
 
-    @SerializedName("thumbnail")
+//    @SerializedName("thumbnail")
     private String path;
 
-    @SerializedName("title")
+//    @SerializedName("title")
     private String title;
 
-    @SerializedName("artist")
+//    @SerializedName("artist")
     private String artist;
 
-    @SerializedName("album")
+//    @SerializedName("album")
     private String album;
 
-    @SerializedName("duration")
+//    @SerializedName("duration")
     private String duration;
 
-    @SerializedName("id")
+//    @SerializedName("id")
     private String id;
 
     public Song(String path, String title, String artist, String album, String duration, String id) {

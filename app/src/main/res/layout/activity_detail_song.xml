@@ -9,42 +9,42 @@
     android:layout_height="match_parent"
     tools:context=".DetailSongActivity">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/gredient_bg"
+        android:id="@+id/layout_top_btn"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_chevron_left_24"
+            android:layout_alignParentStart="true"
+            android:id="@+id/back_btn"
+            android:layout_centerVertical="true"/>
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/gredient_bg"
-            android:id="@+id/layout_top_btn"
-            android:layout_alignParentTop="true">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Now Playing"
+            android:textColor="@color/white"
+            android:layout_toEndOf="@+id/back_btn"
+            android:layout_toStartOf="@+id/menu_btn"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
+            android:gravity="center_horizontal"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_chevron_left_24"
-                android:layout_alignParentStart="true"
-                android:id="@+id/back_btn"
-                android:layout_centerVertical="true"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="Now Playing"
-                android:textColor="@color/white"
-                android:layout_toEndOf="@+id/back_btn"
-                android:layout_toStartOf="@+id/menu_btn"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@android:color/transparent"
-                android:gravity="center_horizontal"/>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/menu_btn"
-                android:src="@drawable/ic_baseline_more_vert_24"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/menu_btn"
+            android:src="@drawable/ic_baseline_more_vert_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,11 +53,11 @@
         android:layout_below="@+id/layout_top_btn">
 
         <ImageView
+            android:id="@+id/cover_art"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:id="@+id/cover_art"
-            android:src="@drawable/messi" />
+            android:scaleType="centerCrop" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -68,7 +68,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_marginTop="30dp"
         android:id="@+id/my_song"
         android:layout_below="@+id/card">
@@ -76,77 +76,91 @@
         <TextView
             android:id="@+id/song_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="This Is My Song"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="265dp"
+            android:background="@android:color/transparent"
+            android:gravity="left"
+            android:text="This is My Song"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:background="@android:color/transparent"
-            android:layout_marginLeft="20dp"
-            android:gravity="left"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="32dp"
-            android:src="@drawable/ic_baseline_queue_music_24"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="64dp"
-            android:src="@drawable/ic_baseline_playlist_add_24"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="96dp"
-            android:src="@drawable/heart"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
-
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/artist"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_below="@+id/my_song"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="9dp"
         android:background="@android:color/transparent"
         android:gravity="left"
-        android:layout_below="@+id/my_song"
         android:text="This is Artist"
-        android:id="@+id/artist"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-   <RelativeLayout
+    <RelativeLayout
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="185dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="32dp"
+            android:src="@drawable/ic_baseline_queue_music_24" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="64dp"
+            android:src="@drawable/ic_baseline_playlist_add_24" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="96dp"
+            android:src="@drawable/heart" />
+    </RelativeLayout>
+
+    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="60dp"
        android:layout_above="@+id/layout_for_bottom"
        android:id="@+id/seek_bar_layout">
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="1:28"
-           android:textColor="@color/white"
-           android:id="@+id/durantionPlayed"
-           android:layout_marginStart="10dp"
-           android:layout_alignParentStart="true"/>
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="4:28"
-           android:textColor="@color/white"
-           android:id="@+id/durantionTotal"
-           android:layout_marginStart="10dp"
-           android:layout_alignParentEnd="true"/>
+        <TextView
+            android:id="@+id/durantionPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="34dp"
+            android:text="0:00"
+            android:textColor="@color/white" />
 
-       <SeekBar
+        <TextView
+            android:id="@+id/durantionTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="33dp"
+            android:text="0:00"
+            android:textColor="@color/white" />
+
+        <SeekBar
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:id="@+id/seekBar"
@@ -171,7 +185,8 @@
             android:src="@drawable/ic_baseline_shuffle_24"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="32dp"/>
+            android:layout_marginStart="32dp"
+            android:id="@+id/shuffed_btn"/>
 
         <ImageView
             android:layout_width="35dp"
@@ -209,7 +224,8 @@
             android:layout_toStartOf="@+id/play_pause"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="32dp"/>
+            android:layout_marginEnd="32dp"
+            android:id="@+id/repeat_btn"/>
 
     </RelativeLayout>
 

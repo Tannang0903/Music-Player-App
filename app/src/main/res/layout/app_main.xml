@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    tools:context=".MainActivity">
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorHeight="120dp"
         app:tabIndicatorGravity="center"
-        app:tabIndicatorColor="#009688"
+        app:tabIndicatorColor="#009689"
         app:tabTextColor="@color/colorAccent">
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager.widget.ViewPager

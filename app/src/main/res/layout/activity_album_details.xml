@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".AlbumDetails">
+    tools:context=".DetailAlbumActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/albumPhoto"
-        android:src="@drawable/messi"
         android:scaleType="centerCrop"/>
 
     <ImageView
@@ -25,6 +24,4 @@
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
         android:layout_below="@+id/albumPhoto"/>
-
-
 </RelativeLayout>

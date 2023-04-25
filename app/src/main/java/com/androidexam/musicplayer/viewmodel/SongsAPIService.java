@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SongsAPIService {
-    private static final String BASE_URL = "https://mp3.zing.vn/";
+    private static final String BASE_URL = "";
     private SongsAPI api;
 
     public SongsAPIService() {
