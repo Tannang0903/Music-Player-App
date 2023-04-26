@@ -10,6 +10,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
@@ -33,12 +34,15 @@ import java.util.ArrayList;
 public class MusicService extends Service implements MediaPlayer.OnCompletionListener {
     IBinder mBinder = new MyBinder();
     MediaPlayer mediaPlayer ;
-    ArrayList<Song> songs = new ArrayList<>();
+    public ArrayList<Song> songs = new ArrayList<>();
     Uri uri;
-    int position = -1;
+    public int position = -1;
     ActionPlaying actionPlaying;
     MediaSessionCompat mediaSessionCompat;
-
+    public static final String MUSIC_LAST_PLAYED = "LAST_PLAYED";
+    public static final String MUSIC_FILE = "STORED_MUSIC";
+    public static final String ARTIST_NAME = "ARTIST NAME";
+    public static final String SONG_NAME = "SONG NAME";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -53,7 +57,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     }
 
     public class MyBinder extends Binder {
-        MusicService getService(){
+        public MusicService getService(){
             return MusicService.this;
         }
     }
@@ -68,24 +72,15 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
             switch (actionName) {
                 case "playPause":
                     Toast.makeText(this, "PlayPause", Toast.LENGTH_SHORT).show();
-                    if(actionPlaying != null) {
-                        Log.e("Inside","Action");
-                        actionPlaying.playPauseClicked();
-                    }
+                    playPauseBtnClicked();
                     break;
                 case "next":
                     Toast.makeText(this, "Next", Toast.LENGTH_SHORT).show();
-                    if(actionPlaying != null) {
-                        Log.e("Inside","Action");
-                        actionPlaying.nextBtnClicked();
-                    }
+                    nextBtnClicked();
                     break;
                 case "previous":
                     Toast.makeText(this, "Previous", Toast.LENGTH_SHORT).show();
-                    if(actionPlaying != null) {
-                        Log.e("Inside","Action");
-                        actionPlaying.preBtnClicked();
-                    }
+                    previousBtnClicked();
                     break;
             }
         }
@@ -121,7 +116,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         mediaPlayer.stop();
     }
 
-    boolean isPlaying() {
+    public boolean isPlaying() {
         return mediaPlayer.isPlaying();
     }
 
@@ -144,6 +139,14 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     void createMediaPlayer(int positionInner) {
         position = positionInner;
         uri = Uri.parse(songs.get(position).getPath());
+        SharedPreferences.Editor editor = getSharedPreferences(MUSIC_LAST_PLAYED,
+                MODE_PRIVATE)
+                .edit();
+        editor.putString(MUSIC_FILE, uri.toString());
+        editor.putString(ARTIST_NAME, songs.get(position).getArtist());
+        editor.putString(SONG_NAME, songs.get(position).getTitle());
+        editor.apply();
+
         mediaPlayer = MediaPlayer.create(getBaseContext(), uri);
     }
 
@@ -211,5 +214,21 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
         retriever.setDataSource(uri);
         byte[] art = retriever.getEmbeddedPicture();
         return art;
+    }
+
+    public void playPauseBtnClicked(){
+        if(actionPlaying != null) {
+            actionPlaying.playPauseClicked();
+        }
+    }
+    public void previousBtnClicked(){
+        if(actionPlaying != null) {
+            actionPlaying.preBtnClicked();
+        }
+    }
+    public void nextBtnClicked() {
+        if(actionPlaying != null) {
+            actionPlaying.nextBtnClicked();
+        }
     }
 }
