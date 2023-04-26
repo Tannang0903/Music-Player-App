@@ -48,7 +48,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
     @NonNull
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e("Bind", "Method ");
+        Log.e("Bind", "Method");
         return mBinder;
     }
 
@@ -169,16 +169,16 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
 
     void showNotification(int playPauseBtn) {
         Intent intent = new Intent(this, DetailSongActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         Intent prevIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_PREVIOUS);
-        PendingIntent prevPending = PendingIntent.getBroadcast(this, 0, prevIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent prevPending = PendingIntent.getBroadcast(this, 0, prevIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent pauseIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_PLAY);
-        PendingIntent pausePending = PendingIntent.getBroadcast(this, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pausePending = PendingIntent.getBroadcast(this, 0, pauseIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent nextIntent = new Intent(this, NotificationReceiver.class).setAction(ACTION_NEXT);
-        PendingIntent nextPending = PendingIntent.getBroadcast(this, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent nextPending = PendingIntent.getBroadcast(this, 0, nextIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         byte[] picture = null;
         picture = getAlbumArt(songs.get(position).getPath());
@@ -203,7 +203,7 @@ public class MusicService extends Service implements MediaPlayer.OnCompletionLis
                 .setOnlyAlertOnce(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
-        startForeground(1,notification);
+        startForeground(2,notification);
     }
 
     private byte[] getAlbumArt(String uri) {

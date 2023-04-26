@@ -178,7 +178,7 @@ public class DetailSongActivity extends AppCompatActivity
     public void playPauseClicked() {
         if(musicService.isPlaying()){
             playPause.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-//            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
+            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             musicService.pause();
             seekBar.setMax(musicService.getDuration() / 1000);
             DetailSongActivity.this.runOnUiThread(new Runnable() {
@@ -194,7 +194,7 @@ public class DetailSongActivity extends AppCompatActivity
             });
         } else {
             playPause.setImageResource(R.drawable.ic_baseline_pause_24);
-//            musicService.showNotification(R.drawable.ic_baseline_pause_24);
+            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             musicService.start();
             seekBar.setMax(musicService.getDuration() / 1000);
             DetailSongActivity.this.runOnUiThread(new Runnable() {
@@ -255,7 +255,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-//            musicService.showNotification(R.drawable.ic_baseline_pause_24);
+            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_pause_24);
             musicService.start();
         }
@@ -286,7 +286,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-//            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
+            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
         }
     }
@@ -335,7 +335,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-//            musicService.showNotification(R.drawable.ic_baseline_pause_24);
+            musicService.showNotification(R.drawable.ic_baseline_pause_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_pause_24);
             musicService.start();
         }
@@ -366,7 +366,7 @@ public class DetailSongActivity extends AppCompatActivity
                 }
             });
             musicService.onCompleted();
-//            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
+            musicService.showNotification(R.drawable.ic_baseline_play_arrow_24);
             playPause.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
         }
     }
@@ -524,7 +524,7 @@ public class DetailSongActivity extends AppCompatActivity
         songName.setText(listSongs.get(position).getTitle());
         songArtist.setText(listSongs.get(position).getArtist());
         musicService.onCompleted();
-//        musicService.showNotification(R.drawable.ic_baseline_pause_24);
+        musicService.showNotification(R.drawable.ic_baseline_pause_24);
     }
 
     @Override
