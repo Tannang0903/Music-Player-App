@@ -56,6 +56,7 @@ public class DetailSongActivity extends AppCompatActivity
     private Thread playThread, nextThread, prevThread;
     MusicService musicService;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -268,7 +269,7 @@ public class DetailSongActivity extends AppCompatActivity
             else if(!shuffleBoolean && !repeatBoolean){
                 position = ((position + 1) % listSongs.size());
             }
-            uri = Uri.parse((listSongs.get(position).getTitle()));
+            uri = Uri.parse((listSongs.get(position).getPath()));
             musicService.createMediaPlayer(position);
             metaData(uri);
             songName.setText(listSongs.get(position).getTitle());
